@@ -1,0 +1,111 @@
+namespace MyWallet.Domain.Migrations {
+	using System.Data.Entity.Migrations;
+
+	public partial class Initialization : DbMigration {
+
+		public override void Up() {
+			CreateTable(
+					"dbo.Accounts",
+					c => new {
+						Id = c.Guid(nullable: false),
+						Name = c.String(),
+						ParentAccountId = c.Guid(),
+						CurrencyId = c.Guid(nullable: false),
+						IconPath = c.String(),
+						RowState = c.Byte(nullable: false),
+						CreatedOn = c.DateTime(nullable: false),
+						ModifiedOn = c.DateTime(nullable: false),
+					})
+				.PrimaryKey(t => t.Id)
+				.ForeignKey("dbo.Currencies", t => t.CurrencyId, cascadeDelete: true)
+				.ForeignKey("dbo.Accounts", t => t.ParentAccountId)
+				.Index(t => t.ParentAccountId)
+				.Index(t => t.CurrencyId);
+
+			CreateTable(
+					"dbo.Currencies",
+					c => new {
+						Id = c.Guid(nullable: false),
+						Name = c.String(),
+						Symbol = c.String(),
+						IconPath = c.String(),
+						RowState = c.Byte(nullable: false),
+						CreatedOn = c.DateTime(nullable: false),
+						ModifiedOn = c.DateTime(nullable: false),
+					})
+				.PrimaryKey(t => t.Id);
+
+			CreateTable(
+					"dbo.Categories",
+					c => new {
+						Id = c.Guid(nullable: false),
+						Name = c.String(),
+						DirectionTypeId = c.Int(nullable: false),
+						IconPath = c.String(),
+						RowState = c.Byte(nullable: false),
+						CreatedOn = c.DateTime(nullable: false),
+						ModifiedOn = c.DateTime(nullable: false),
+					})
+				.PrimaryKey(t => t.Id);
+
+			CreateTable(
+					"dbo.CurrencyRates",
+					c => new {
+						Id = c.Guid(nullable: false),
+						SourceCurrencyId = c.Guid(nullable: false),
+						DestinationCurrencyId = c.Guid(nullable: false),
+						Rate = c.Decimal(nullable: false, precision: 18, scale: 2),
+						RowState = c.Byte(nullable: false),
+						CreatedOn = c.DateTime(nullable: false),
+						ModifiedOn = c.DateTime(nullable: false),
+					})
+				.PrimaryKey(t => t.Id)
+				.ForeignKey("dbo.Currencies", t => t.DestinationCurrencyId)
+				.ForeignKey("dbo.Currencies", t => t.SourceCurrencyId)
+				.Index(t => t.SourceCurrencyId)
+				.Index(t => t.DestinationCurrencyId);
+
+			CreateTable(
+					"dbo.Transactions",
+					c => new {
+						Id = c.Guid(nullable: false),
+						Amount = c.Decimal(nullable: false, precision: 18, scale: 2),
+						Comment = c.String(),
+						CategoryId = c.Guid(nullable: false),
+						AccountId = c.Guid(nullable: false),
+						NeedConfirm = c.Boolean(nullable: false),
+						RowState = c.Byte(nullable: false),
+						CreatedOn = c.DateTime(nullable: false),
+						ModifiedOn = c.DateTime(nullable: false),
+					})
+				.PrimaryKey(t => t.Id)
+				.ForeignKey("dbo.Accounts", t => t.AccountId, cascadeDelete: true)
+				.ForeignKey("dbo.Categories", t => t.CategoryId, cascadeDelete: true)
+				.Index(t => t.CategoryId)
+				.Index(t => t.AccountId);
+
+		}
+
+		public override void Down() {
+			DropForeignKey("dbo.Transactions", "CategoryId", "dbo.Categories");
+			DropForeignKey("dbo.Transactions", "AccountId", "dbo.Accounts");
+			DropForeignKey("dbo.CurrencyRates", "SourceCurrencyId", "dbo.Currencies");
+			DropForeignKey("dbo.CurrencyRates", "DestinationCurrencyId", "dbo.Currencies");
+			DropForeignKey("dbo.Accounts", "ParentAccountId", "dbo.Accounts");
+			DropForeignKey("dbo.Accounts", "CurrencyId", "dbo.Currencies");
+			DropIndex("dbo.Transactions", new[] {"AccountId"});
+			DropIndex("dbo.Transactions", new[] {"CategoryId"});
+			DropIndex("dbo.CurrencyRates", new[] {"DestinationCurrencyId"});
+			DropIndex("dbo.CurrencyRates", new[] {"SourceCurrencyId"});
+			DropIndex("dbo.Accounts", new[] {"CurrencyId"});
+			DropIndex("dbo.Accounts", new[] {"ParentAccountId"});
+			DropTable("dbo.Transactions");
+			DropTable("dbo.CurrencyRates");
+			DropTable("dbo.Categories");
+			DropTable("dbo.Currencies");
+			DropTable("dbo.Accounts");
+		}
+
+	}
+
+}

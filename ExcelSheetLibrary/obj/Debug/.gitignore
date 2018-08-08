@@ -1,0 +1,5 @@
+*.pdb
+*.dll
+*.csprojResolveAssemblyReference.cache
+*.cache
+/TempPE/

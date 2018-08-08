@@ -1,0 +1,27 @@
+﻿@model MyWallet.Domain.Entities.Category
+
+@{
+	ViewBag.Title = "Edit";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel">
+	<div class="panel-heading">
+		<h3>Edit @Model.Name</h3>
+	</div>
+
+	@using (Html.BeginForm("Edit", "Category")) {
+		<div class="panel-body">
+			@Html.HiddenFor(m => m.Id)
+			<label>@Html.DisplayNameFor(model => model.Name)</label>
+			@Html.TextBoxFor(model => model.Name, null,
+				new { @class = "form-control" })
+		</div>
+
+		<div class="panel-footer">
+			<input type="submit" value="Save" class="btn btn-primary" />
+			@Html.ActionLink("Cancel and return to list", "List", null,
+				new { @class = "btn btn-default" })
+		</div>
+	}
+</div>

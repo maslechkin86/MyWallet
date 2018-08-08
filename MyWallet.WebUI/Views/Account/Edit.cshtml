@@ -1,0 +1,45 @@
+﻿@model MyWallet.Domain.Entities.Account
+
+@{
+	ViewBag.Title = "Edit";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel">
+	<div class="panel-heading">
+		<h3>Edit @Model.Name</h3>
+	</div>
+
+	@using (Html.BeginForm("Edit", "Account", FormMethod.Post,
+		new { enctype = "multipart/form-data" })) {
+		<div class="panel-body">
+			@Html.HiddenFor(m => m.Id)
+			<label>@Html.DisplayNameFor(model => model.Name)</label>
+			@Html.TextBoxFor(model => model.Name, null,
+				new { @class = "form-control" })
+			<label>@Html.LabelFor(model => model.ParentAccount)</label>
+			@Html.DropDownList("Accounts", null,
+				new { @class = "form-control" })
+			@*<div class="btn btn-default">
+				<label for="item-icon">
+					@{
+						if (Model.Icon != null) {
+							var imageBase64 = Convert.ToBase64String(Model.Icon);
+							var imageSrc = $"data:image/gif;base64,{imageBase64}";
+							<img src="@imageSrc" width="64" height="64" />
+						} else {
+							<label>Select image</label>
+						}
+					}
+				</label>
+				<input type="file" name="item-icon" id="item-icon" accept="image/*;capture=camera" style="display: none;">
+			</div>*@
+		</div>
+
+		<div class="panel-footer">
+			<input type="submit" value="Save" class="btn btn-primary"/>
+			@Html.ActionLink("Cancel and return to list", "List", null,
+				new { @class = "btn btn-default" })
+		</div>
+	}
+</div>

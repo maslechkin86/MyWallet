@@ -1,0 +1,10 @@
+G:\Programming C#\MyWallet\bin\ExcelSheetLibrary.dll
+G:\Programming C#\MyWallet\bin\ExcelSheetLibrary.pdb
+G:\Programming C#\MyWallet\ExcelSheetLibrary\obj\Debug\ExcelSheetLibrary.dll
+G:\Programming C#\MyWallet\ExcelSheetLibrary\obj\Debug\ExcelSheetLibrary.pdb
+G:\Programming C#\MyWallet\ExcelSheetLibrary\obj\Debug\ExcelLibrary.csprojResolveAssemblyReference.cache
+c:\MyWork\MyWallet\bin\ExcelSheetLibrary.dll
+c:\MyWork\MyWallet\bin\ExcelSheetLibrary.pdb
+c:\MyWork\MyWallet\ExcelSheetLibrary\obj\Debug\ExcelLibrary.csprojResolveAssemblyReference.cache
+c:\MyWork\MyWallet\ExcelSheetLibrary\obj\Debug\ExcelSheetLibrary.dll
+c:\MyWork\MyWallet\ExcelSheetLibrary\obj\Debug\ExcelSheetLibrary.pdb

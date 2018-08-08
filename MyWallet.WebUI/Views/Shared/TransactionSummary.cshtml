@@ -1,0 +1,10 @@
+﻿@model MyWallet.WebUI.Models.TransactionViewModel
+
+<div class="well">
+	<h3>
+		<strong>@Model.Comment</strong>
+		<span class="pull-right label label-primary">@Model.Amount.ToString("c")</span>
+	</h3>
+	<span class="lead"> @Model.AccountName</span>
+	<span class="lead"> @Model.CategoryName</span>
+</div>

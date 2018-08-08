@@ -1,0 +1,122 @@
+﻿@model IEnumerable<MyWallet.WebUI.Models.TransactionViewModel>
+
+@{
+	ViewBag.Title = "List";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>List</h2>
+<p>
+	@Html.ActionLink("Create New", "Create")
+</p>
+
+<div class="well row">
+    <h3>Transactions</h3>
+    @foreach(var item in Model) {
+        <div class="row">
+            <div class="col-md-1">
+                <img src="@Html.DisplayFor(modelItem => item.CategoryIco)" width="20" height="20" float="left" />
+            </div>
+            <div class="col-md-2">@Html.DisplayFor(modelItem => item.DateIn)</div>
+            <div class="col-md-3">@Html.DisplayFor(modelItem => item.Comment)</div>
+            <div class="col-md-2">@Html.DisplayFor(modelItem => item.Amount) PLN</div>
+            <div class="col-md-2">
+                <img src="@Html.DisplayFor(modelItem => item.AccountIco)" width="20" height="20" float="left" />
+                @Html.DisplayFor(modelItem => item.AccountName)
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#TransactionUpdateModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button>
+                <button type="button" class="btn btn-default btn-xs" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                @Html.ActionLink("Edit", "Edit", new {transactionId = item.Id}) |
+                @Html.ActionLink("Delete", "Delete", new {transactionId = item.Id})
+            </div>
+        </div>
+    }
+</div>
+<script src="~/Scripts/jquery-2.2.4.min.js"></script>
+@*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/bootstrap-datepicker.js"></script>
+
+<div class="modal fade" id="TransactionUpdateModal" role="dialog" aria-labelledby="TransactionUpdateModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Edit Transaction</h4>
+            </div>
+            <div class="modal-body">
+                <form id="TransactionUpdateForm" action="/">
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label for="TransactionUpdateForm-AccountId" class="control-label">Account</label>
+                                    <select id="TransactionUpdateForm-AccountId" class="form-control" name="AccountId" placeholder="Account..."></select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <a>Wallet(PLN)</a>,
+                                <a>MillenniumBank</a>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label for="TransactionUpdateForm-Amount" class="control-label">Amount</label>
+                                    <input id="TransactionUpdateForm-Amount" type="text" class="form-control" name="Amount" placeholder="Amount...">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label for="TransactionUpdateForm-CurrencyId" class="control-label">Currency</label>
+                                    <select id="TransactionUpdateForm-CurrencyId" class="form-control" name="CurrencyId" placeholder="Currency..."></select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label for="TransactionUpdateForm-CategoyId" class="control-label">Category</label>
+                                    <select id="TransactionUpdateForm-CategoyId" class="form-control" name="CategoryId" placeholder="Category..."></select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <a><img src="/Content/Images/food.JPG" width="20" height="20" float="left" alt="Food"/></a>
+                                <a><img src="/Content/Images/fun.JPG" width="20" height="20" float="left" alt="Fun" /></a>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label for="TransactionUpdateForm-DateIn" class="control-label">DateIn</label>
+                                    <input id="TransactionUpdateForm-DateIn" type="text" class="datepicker form-control" name="DateIn" placeholder="DateIn..." data-date-format="dd/mm/yyyy">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <a>yyyy-MM-dd (last date)</a>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label for="TransactionUpdateForm-Comment" class="control-label">Comment</label>
+                                    <input id="TransactionUpdateForm-Comment" type="text" class="form-control" name="Comment" placeholder="Comment...">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <!-- Submit Button -->
+                <button id="TransactionUpdateSubmitButton" type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
